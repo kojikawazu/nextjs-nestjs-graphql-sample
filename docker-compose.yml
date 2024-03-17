@@ -2,11 +2,23 @@ version: '3.8'
 
 services:
 
+  nextjs:
+    container_name: nextjs
+    build: ./frontend/
+    ports:
+      - "3000:3000" # Next.jsのポート
+    restart: always
+    volumes:
+      - ./frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - nestjs
+
   nestjs:
     container_name: nestjs
     build: ./backend/
     ports:
-      - "3000:3000" # NestJSのポート
+      - "8000:8000" # NestJSのポート
       - "5555:5555" # Prisma Studioのポート
     restart: always
     volumes:
