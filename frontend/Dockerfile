@@ -1,11 +1,21 @@
 # Dockerfile
 FROM node:latest
 
+RUN apt-get update && apt-get install -y \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    libzip-dev \
+    libpq-dev \
+    zip \
+    unzip \
+    curl \
+    git \
+    vim \
+    iputils-ping
+
 # アプリケーションディレクトリを作成する
 WORKDIR /usr/src/app
-
-# 必要モジュールをインストール
-RUN npm i -g @nestjs/cli
 
 # アプリケーションの依存関係ファイルをコピーする
 COPY package*.json ./
@@ -17,15 +27,12 @@ RUN npm install
 # アプリケーションのソースコードをコピーする
 COPY . .
 
-# Prisma Clientの生成
-RUN npx prisma generate
-
 # アプリケーションをビルドする
 RUN npm run build
 
 # アプリケーションがリッスンするポートを指定する
-EXPOSE 8000
+EXPOSE 3000
 
 # アプリケーションを起動する
 #CMD ["npm", "run", "start:prod"]
-CMD ["npm", "run", "start:dev"]
+CMD ["npm", "run", "dev"]
