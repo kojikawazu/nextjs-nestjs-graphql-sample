@@ -24,7 +24,7 @@ RUN npx prisma generate
 RUN npm run build
 
 # アプリケーションがリッスンするポートを指定する
-EXPOSE 3000
+EXPOSE 8000
 
 # アプリケーションを起動する
 #CMD ["npm", "run", "start:prod"]
